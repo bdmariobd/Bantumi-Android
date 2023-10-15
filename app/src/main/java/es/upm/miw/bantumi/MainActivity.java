@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         setContentView(R.layout.activity_main);
 
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         switch (turnoActual) {
             case turnoJ1:
                 tvJugador1.setTextColor(getColor(R.color.white));
-                tvJugador1.setBackgroundColor(getColor(android.R.color.holo_blue_light));
+                tvJugador1.setBackgroundColor(getColor(R.color.md_theme_light_secondary));
                 tvJugador2.setTextColor(getColor(R.color.black));
                 tvJugador2.setBackgroundColor(getColor(R.color.white));
                 break;
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 tvJugador1.setTextColor(getColor(R.color.black));
                 tvJugador1.setBackgroundColor(getColor(R.color.white));
                 tvJugador2.setTextColor(getColor(R.color.white));
-                tvJugador2.setBackgroundColor(getColor(android.R.color.holo_blue_light));
+                tvJugador2.setBackgroundColor(getColor(R.color.md_theme_light_secondary));
                 break;
             default:
                 tvJugador1.setTextColor(getColor(R.color.black));
