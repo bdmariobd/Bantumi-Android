@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface GameDAO {
-    @Query("SELECT * FROM games ")
+    @Query("SELECT games.*, MAX(games.PlayerScore,games.CPUScore) as BetterScore FROM games ORDER BY BetterScore DESC ")
     LiveData<List<Game>> getAllGames();
 
     @Insert
