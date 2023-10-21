@@ -20,6 +20,15 @@
             android:singleLine="true"
             android:title="@string/initialSeedNumberTitle"
             app:key="initialSeedNumber" />
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="Player"
+            android:inputType="text"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/nickNameTitle"
+            app:key="nickName" />
     </PreferenceCategory>
     <PreferenceCategory
         android:layout_width="wrap_content"
@@ -39,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:title="@string/apperanceSettingsDynamicColor"
-            app:key="useDinamicColor" />
+            app:key="useDinamicColor"
+            app:defaultValue="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

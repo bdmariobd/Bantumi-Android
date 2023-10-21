@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.color.DynamicColors;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -38,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
-
-        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
-
     }
 
     /**

@@ -54,5 +54,6 @@
     <string name="apperanceSettingsTitle">Apariencia</string>
     <string name="apperanceSettingsThemeTitle">Tema</string>
     <string name="initialSeedNumberTitle">Numero inicial de semillas</string>
+    <string name="nickNameTitle"> Nombre del jugador</string>
 
 </resources>
