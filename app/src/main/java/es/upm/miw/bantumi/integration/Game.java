@@ -29,6 +29,13 @@ public class Game {
     @ColumnInfo(name = "CPUScore")
     private int cpuScore;
 
+    public Game(@NonNull String nickname, int playerScore, int cpuScore) {
+        this.nickname = nickname;
+        this.playerScore = playerScore;
+        this.cpuScore = cpuScore;
+        this.date = new Date();
+    }
+
     public int getUuid() {
         return uuid;
     }
@@ -69,12 +76,5 @@ public class Game {
 
     public void setCpuScore(int cpuScore) {
         this.cpuScore = cpuScore;
-    }
-
-    public Game(@NonNull String nickname, int playerScore, int cpuScore) {
-        this.nickname = nickname;
-        this.playerScore = playerScore;
-        this.cpuScore = cpuScore;
-        this.date = new Date();
     }
 }

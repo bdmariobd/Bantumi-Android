@@ -9,6 +9,10 @@ import androidx.room.TypeConverters;
 public abstract class GameRoomDatabase extends RoomDatabase {
     private static GameRoomDatabase INSTANCE;
 
+    public static GameRoomDatabase getDatabase() {
+        return INSTANCE;
+    }
+
     public abstract GameDAO gameDao();
 
 
