@@ -176,7 +176,9 @@ public class MainActivity extends AppCompatActivity {
                     ).show();
                 }
                 return true;
-
+            case R.id.opcMejoresResultados:
+                startActivity(new Intent(this, BestResultsActivity.class));
+                return true;
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;

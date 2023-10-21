@@ -65,5 +65,7 @@
     <string name="dynamicColorSummary">Si es posible, utiliza los colores de tu fondo de pantalla para customizar la aplicación. Requiere Android 12 como mínimo.</string>
     <string name="txtFicheroRecuperado">Partida recuperada!</string>
     <string name="txtFicheroFalloAlRecuperar">Fallo al recuperar la partida</string>
+    <string name="highestScoresTitle">Mejores puntuaciones</string>
+    <string name="deleteAllSpekeable">Borrar todas las puntuaciones</string>
 
 </resources>
