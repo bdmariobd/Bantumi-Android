@@ -18,10 +18,6 @@ public class BantumiApp extends Application {
         setDynamicTheme(useDynamicTheme);
     }
 
-    public boolean isDynamicTheme() {
-        return useDynamicTheme;
-    }
-
     public void setDynamicTheme(Boolean useDynamicTheme) {
         if (useDynamicTheme) {
             DynamicColors.applyToActivitiesIfAvailable(this);

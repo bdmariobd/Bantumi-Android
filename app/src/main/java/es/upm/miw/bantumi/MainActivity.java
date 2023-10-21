@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected final String LOG_TAG = "MiW";
     public JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
-    int numInicialSemillas;
+    Integer numInicialSemillas;
     private GameViewModel gameVM;
 
     @Override
@@ -48,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
-        numInicialSemillas =
-                getResources().getInteger(PreferenceManager.getDefaultSharedPreferences(this)
-                        .getInt("numInicialSemillas", R.integer.intNumInicialSemillas));
+        numInicialSemillas = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas))));
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         gameVM = new ViewModelProvider(this).get(GameViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);

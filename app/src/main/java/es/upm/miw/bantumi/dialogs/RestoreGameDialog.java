@@ -1,6 +1,5 @@
 package es.upm.miw.bantumi.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,15 +9,10 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import es.upm.miw.bantumi.JuegoBantumi;
 import es.upm.miw.bantumi.MainActivity;
 import es.upm.miw.bantumi.R;
 import es.upm.miw.bantumi.utils.DateUtils;
@@ -65,7 +59,7 @@ public class RestoreGameDialog extends DialogFragment {
                 .setPositiveButton(
                         getString(android.R.string.ok),
                         (dialog, which) -> {
-                            if(selected == -1) {
+                            if (selected == -1) {
                                 Snackbar.make(
                                         main.findViewById(android.R.id.content),
                                         getString(R.string.txtFicheroNoSeleccionado),
@@ -92,7 +86,9 @@ public class RestoreGameDialog extends DialogFragment {
                 )
                 .setNegativeButton(
                         getString(android.R.string.cancel),
-                        (dialog, which) -> main.finish()
+                        (dialog, which) -> {
+                            dialog.cancel();
+                        }
                 );
 
         return builder.create();
