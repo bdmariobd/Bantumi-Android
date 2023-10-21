@@ -74,5 +74,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="borrar">Borrar</string>
     <string name="txtPartidasFueronBorradas">Las partidas fueron borradas</string>
+    <string name="txtPartidaFuerBorrada">La partida fue borrada</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package es.upm.miw.bantumi.gameListView;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,11 +14,15 @@ import es.upm.miw.bantumi.utils.DateUtils;
 public class GameViewHolder extends RecyclerView.ViewHolder {
 
     TextView gameScore, gameDate;
+    Game game;
+
+    Button deleteButton;
 
     public GameViewHolder(@NonNull View itemView) {
         super(itemView);
         gameScore = itemView.findViewById(R.id.tvScoreTitleItem);
         gameDate = itemView.findViewById(R.id.tvDateScoreItem);
+        deleteButton = itemView.findViewById(R.id.btDeleteOneItem);
     }
 
     public void bind(Game game) {
@@ -25,5 +30,14 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         gameScore.setText(scoreData);
         String date = new DateUtils().dateToString(game.getDate());
         gameDate.setText(date);
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Button getDeleteButton() {
+        return deleteButton;
     }
 }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         holder.bind(mGameList.get(position));
+        holder.getDeleteButton().setOnClickListener(v -> {
+            Game game = holder.getGame();
+            mGameList.remove(game);
+            notifyDataSetChanged();
+            Snackbar.make(
+                    v,
+                    R.string.txtPartidaFuerBorrada,
+                    Snackbar.LENGTH_SHORT
+            ).show();
+        });
     }
 
     @Override
@@ -42,4 +54,5 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         this.mGameList = games;
         notifyDataSetChanged();
     }
+
 }
