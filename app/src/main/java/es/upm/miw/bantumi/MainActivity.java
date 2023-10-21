@@ -22,13 +22,16 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.dialogs.FinalAlertDialog;
+import es.upm.miw.bantumi.dialogs.RestoreGameDialog;
 import es.upm.miw.bantumi.gameListView.BestResultsActivity;
 import es.upm.miw.bantumi.integration.Game;
 import es.upm.miw.bantumi.model.BantumiViewModel;
 import es.upm.miw.bantumi.model.GameViewModel;
+import es.upm.miw.bantumi.utils.DateUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -154,32 +157,11 @@ public class MainActivity extends AppCompatActivity {
                         findViewById(android.R.id.content),
                         getString(R.string.txtFicheroGuardado),
                         Snackbar.LENGTH_LONG
-                ).setAction(
-                        getString(R.string.txtDeshacer),
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                saveGameToFile("");
-                            }
-                        }
                 ).show();
                 return true;
             case R.id.opcRecuperarPartida:
-                try {
-                    String game = this.readFile();
-                    this.juegoBantumi.deserializa(game);
-                    Snackbar.make(
-                            findViewById(android.R.id.content),
-                            getString(R.string.txtFicheroRecuperado),
-                            Snackbar.LENGTH_LONG
-                    ).show();
-                } catch (IOException e) {
-                    Snackbar.make(
-                            findViewById(android.R.id.content),
-                            getString(R.string.txtFicheroFalloAlRecuperar),
-                            Snackbar.LENGTH_LONG
-                    ).show();
-                }
+                RestoreGameDialog restoreGameDialog = new RestoreGameDialog();
+                restoreGameDialog.show(getSupportFragmentManager(), "RESTORE_DIALOG");
                 return true;
             case R.id.opcMejoresResultados:
                 startActivity(new Intent(this, BestResultsActivity.class));
@@ -195,8 +177,6 @@ public class MainActivity extends AppCompatActivity {
                         .show();
                 return true;
 
-            // @TODO!!! resto opciones
-
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -207,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private String readFile() throws IOException {
-        BufferedReader fin = new BufferedReader(new InputStreamReader(openFileInput("game.txt")));
+    public String readFile(String name) throws IOException {
+        BufferedReader fin = new BufferedReader(new InputStreamReader(openFileInput(name)));
         StringBuilder fileContent = new StringBuilder();
         String linea = fin.readLine();
         while (linea != null) {
@@ -216,13 +196,13 @@ public class MainActivity extends AppCompatActivity {
             linea = fin.readLine();
         }
         fin.close();
-        Log.d("Ficheros", "File read! Content: " + fileContent);
         return fileContent.toString();
     }
 
     private void saveGameToFile(String gameSerialized) {
+        String fileName = new DateUtils().dateToUnixTimestamp(new Date()) + ".txt";
         try {
-            FileOutputStream fos = openFileOutput(MI_FICHERO, Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
             fos.write(gameSerialized.getBytes());
             fos.close();
         } catch (IOException e) {

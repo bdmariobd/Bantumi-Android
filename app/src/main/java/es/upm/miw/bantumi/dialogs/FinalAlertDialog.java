@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import es.upm.miw.bantumi.JuegoBantumi;
 import es.upm.miw.bantumi.MainActivity;
 import es.upm.miw.bantumi.R;
@@ -20,7 +22,7 @@ public class FinalAlertDialog extends DialogFragment {
         final MainActivity main = (MainActivity) requireActivity();
 
         assert main != null;
-        AlertDialog.Builder builder = new AlertDialog.Builder(main);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(main);
         builder
                 .setTitle(R.string.txtDialogoFinalTitulo)
                 .setMessage(R.string.txtDialogoFinalPregunta)

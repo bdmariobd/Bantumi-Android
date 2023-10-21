@@ -75,5 +75,7 @@
     <string name="borrar">Borrar</string>
     <string name="txtPartidasFueronBorradas">Las partidas fueron borradas</string>
     <string name="txtPartidaFuerBorrada">La partida fue borrada</string>
+    <string name="txtDialogoRestaurarTitulo">Restaurar partida</string>
+    <string name="txtFicheroNoSeleccionado">No seleccionaste ninguna partida</string>
 
 </resources>
