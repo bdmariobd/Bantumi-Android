@@ -14,12 +14,15 @@ import java.util.List;
 
 import es.upm.miw.bantumi.R;
 import es.upm.miw.bantumi.integration.Game;
+import es.upm.miw.bantumi.model.GameViewModel;
 
 public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
     List<Game> mGameList;
+    GameViewModel gameViewModel;
 
-    public GameListAdapter() {
+    public GameListAdapter(GameViewModel gameViewModel) {
+        this.gameViewModel = gameViewModel;
         this.mGameList = new ArrayList<Game>();
     }
 
@@ -36,6 +39,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         holder.getDeleteButton().setOnClickListener(v -> {
             Game game = holder.getGame();
             mGameList.remove(game);
+            gameViewModel.delete(game);
             notifyDataSetChanged();
             Snackbar.make(
                     v,
