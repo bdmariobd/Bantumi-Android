@@ -19,4 +19,8 @@ public class GameViewModel extends ViewModel {
     public void delete(Game game) {
         gameRepository.delete(game);
     }
+
+    public void deleteAll() {
+        gameRepository.deleteAll();
+    }
 }

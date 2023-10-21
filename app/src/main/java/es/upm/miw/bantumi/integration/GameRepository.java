@@ -25,4 +25,8 @@ public class GameRepository {
     public void delete(Game game) {
         gameDAO.delete(game);
     }
+
+    public void deleteAll() {
+        gameDAO.deleteAll();
+    }
 }
