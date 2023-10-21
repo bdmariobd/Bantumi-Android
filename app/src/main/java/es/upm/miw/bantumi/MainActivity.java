@@ -118,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.opcReiniciarPartida:
+                juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                return true;
 //            case R.id.opcAjustes: // @todo Preferencias
 //                startActivity(new Intent(this, BantumiPrefs.class));
 //                return true;
