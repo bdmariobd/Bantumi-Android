@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_miw_launcher_rounded"
         android:supportsRtl="true"
+        android:name=".BantumiApp"
         android:theme="@style/Theme.Bantumi"
         tools:targetApi="s">
         <activity
