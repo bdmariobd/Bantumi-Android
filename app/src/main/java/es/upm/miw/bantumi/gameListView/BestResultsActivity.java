@@ -2,7 +2,6 @@ package es.upm.miw.bantumi.gameListView;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class BestResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.highest_scores_activity);
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        gameListAdapter = new GameListAdapter();
+        gameListAdapter = new GameListAdapter(gameViewModel);
         lvGameList = findViewById(R.id.rvScores);
         lvGameList.setAdapter(gameListAdapter);
         lvGameList.setLayoutManager(new LinearLayoutManager(this));
@@ -46,7 +45,7 @@ public class BestResultsActivity extends AppCompatActivity {
                 .setPositiveButton(
                         getString(R.string.borrar),
                         (dialog, which) -> {
-                            gameViewModel.deleteAll();
+                            this.gameViewModel.deleteAll();
                             Snackbar.make(
                                     findViewById(android.R.id.content),
                                     R.string.txtPartidasFueronBorradas,
@@ -59,6 +58,5 @@ public class BestResultsActivity extends AppCompatActivity {
                         (dialog, which) -> dialog.cancel()
                 );
         builder.create().show();
-        
     }
 }

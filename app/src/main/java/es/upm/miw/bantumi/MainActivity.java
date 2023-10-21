@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
-import es.upm.miw.bantumi.gameListView.BestResultsActivity;
 import es.upm.miw.bantumi.dialogs.FinalAlertDialog;
+import es.upm.miw.bantumi.gameListView.BestResultsActivity;
 import es.upm.miw.bantumi.integration.Game;
 import es.upm.miw.bantumi.model.BantumiViewModel;
 import es.upm.miw.bantumi.model.GameViewModel;

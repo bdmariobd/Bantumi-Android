@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.google.android.material.color.DynamicColors;
-
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -41,10 +39,10 @@ public class SettingsActivity extends AppCompatActivity {
             findPreference("useDinamicColor").setOnPreferenceChangeListener(
                     (preference, newValue) -> {
                         BantumiApp app = (BantumiApp) requireActivity().getApplication();
-                        if(newValue.toString().equals("true")){
+                        if (newValue.toString().equals("true")) {
                             app.setDynamicTheme(true);
                             this.getActivity().recreate();
-                        }else{
+                        } else {
                             app.setDynamicTheme(false);
                             this.getActivity().recreate();
                         }
