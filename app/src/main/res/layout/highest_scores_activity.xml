@@ -13,10 +13,11 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:contentDescription="@string/deleteAllSpekeable"
+        android:focusable="true"
+        android:onClick="deleteAllGames"
         android:src="@android:drawable/ic_menu_delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="true" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -34,7 +35,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScores"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="deleteAllGames"
+            tools:listitem="@layout/gamescore_item" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

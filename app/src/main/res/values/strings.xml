@@ -67,5 +67,12 @@
     <string name="txtFicheroFalloAlRecuperar">Fallo al recuperar la partida</string>
     <string name="highestScoresTitle">Mejores puntuaciones</string>
     <string name="deleteAllSpekeable">Borrar todas las puntuaciones</string>
+    <string name="score">Puntuación</string>
+    <string name="cpu">CPU</string>
+    <string name="txtDialogoBorrarPartidasTitulo">Borrar todas las partidas</string>
+    <string name="txtDialogoBorrarPartidasPregunta">¿Desea borrar todas las partidas? Esta acción NO es reversible</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="borrar">Borrar</string>
+    <string name="txtPartidasFueronBorradas">Las partidas fueron borradas</string>
 
 </resources>

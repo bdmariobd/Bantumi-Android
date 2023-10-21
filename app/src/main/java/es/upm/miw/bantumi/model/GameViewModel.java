@@ -1,15 +1,25 @@
 package es.upm.miw.bantumi.model;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
 
 import es.upm.miw.bantumi.integration.Game;
 import es.upm.miw.bantumi.integration.GameRepository;
 
-public class GameViewModel extends ViewModel {
+public class GameViewModel extends AndroidViewModel {
     private final GameRepository gameRepository;
 
-    public GameViewModel() {
-        this.gameRepository = new GameRepository();
+    private final LiveData<List<Game>> allGames;
+
+
+    public GameViewModel(Application application) {
+        super(application);
+        this.gameRepository = new GameRepository(application);
+        this.allGames = gameRepository.getAllGames();
     }
 
     public void insert(Game game) {
@@ -22,5 +32,10 @@ public class GameViewModel extends ViewModel {
 
     public void deleteAll() {
         gameRepository.deleteAll();
+    }
+
+
+    public LiveData<List<Game>> getAllGames() {
+        return this.allGames;
     }
 }

@@ -24,8 +24,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
+import es.upm.miw.bantumi.gameListView.BestResultsActivity;
 import es.upm.miw.bantumi.dialogs.FinalAlertDialog;
+import es.upm.miw.bantumi.integration.Game;
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.GameViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     int numInicialSemillas;
+    private GameViewModel gameVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getInteger(PreferenceManager.getDefaultSharedPreferences(this)
                         .getInt("numInicialSemillas", R.integer.intNumInicialSemillas));
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
+        gameVM = new ViewModelProvider(this).get(GameViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
     }
@@ -286,8 +291,11 @@ public class MainActivity extends AppCompatActivity {
                 )
                 .show();
 
-        // @TODO guardar puntuación
-
+        // guardar puntuación
+        String nickname = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("nickName", "Player");
+        Game game = new Game(nickname, juegoBantumi.getSemillas(6), juegoBantumi.getSemillas(13));
+        this.gameVM.insert(game);
         // terminar
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
     }

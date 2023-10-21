@@ -1,5 +1,7 @@
 package es.upm.miw.bantumi.integration;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -8,8 +10,8 @@ public class GameRepository {
     private final GameDAO gameDAO;
     private final LiveData<List<Game>> allGames;
 
-    public GameRepository() {
-        GameRoomDatabase db = GameRoomDatabase.getDatabase();
+    public GameRepository(Context context) {
+        GameRoomDatabase db = GameRoomDatabase.getDatabase(context);
         this.gameDAO = db.gameDao();
         this.allGames = gameDAO.getAllGames();
     }
