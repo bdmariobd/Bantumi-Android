@@ -63,5 +63,7 @@
     <string name="nickNameSummary">Nombre del jugador</string>
     <string name="themeSummary">Tema actual</string>
     <string name="dynamicColorSummary">Si es posible, utiliza los colores de tu fondo de pantalla para customizar la aplicación. Requiere Android 12 como mínimo.</string>
+    <string name="txtFicheroRecuperado">Partida recuperada!</string>
+    <string name="txtFicheroFalloAlRecuperar">Fallo al recuperar la partida</string>
 
 </resources>

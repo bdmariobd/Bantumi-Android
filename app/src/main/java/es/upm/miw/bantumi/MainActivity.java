@@ -3,7 +3,6 @@ package es.upm.miw.bantumi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,8 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.dialogs.FinalAlertDialog;
@@ -158,6 +159,24 @@ public class MainActivity extends AppCompatActivity {
                         }
                 ).show();
                 return true;
+            case R.id.opcRecuperarPartida:
+                try {
+                    String game = this.readFile();
+                    this.juegoBantumi.deserializa(game);
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            getString(R.string.txtFicheroRecuperado),
+                            Snackbar.LENGTH_LONG
+                    ).show();
+                } catch (IOException e) {
+                    Snackbar.make(
+                            findViewById(android.R.id.content),
+                            getString(R.string.txtFicheroFalloAlRecuperar),
+                            Snackbar.LENGTH_LONG
+                    ).show();
+                }
+                return true;
+
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -179,6 +198,19 @@ public class MainActivity extends AppCompatActivity {
                 ).show();
         }
         return true;
+    }
+
+    private String readFile() throws IOException {
+        BufferedReader fin = new BufferedReader(new InputStreamReader(openFileInput("game.txt")));
+        StringBuilder fileContent = new StringBuilder();
+        String linea = fin.readLine();
+        while (linea != null) {
+            fileContent.append(linea).append("\n");
+            linea = fin.readLine();
+        }
+        fin.close();
+        Log.d("Ficheros", "File read! Content: " + fileContent);
+        return fileContent.toString();
     }
 
     private void saveGameToFile(String gameSerialized) {
