@@ -58,5 +58,10 @@
     <string name="txtFicheroFalloAlGuardar">Fallo al guardar la partida</string>
     <string name="txtFicheroGuardado">Partida guardada con exito</string>
     <string name="txtDeshacer">Deshacer</string>
+    <string name="txtJuegoReiniciado">Juego reiniciado</string>
+    <string name="initialSeedSummary">Semillas actuales</string>
+    <string name="nickNameSummary">Nombre del jugador</string>
+    <string name="themeSummary">Tema actual</string>
+    <string name="dynamicColorSummary">Si es posible, utiliza los colores de tu fondo de pantalla para customizar la aplicación. Requiere Android 12 como mínimo.</string>
 
 </resources>

@@ -42,13 +42,35 @@ public class SettingsActivity extends AppCompatActivity {
                     (preference, newValue) -> {
                         BantumiApp app = (BantumiApp) requireActivity().getApplication();
                         if(newValue.toString().equals("true")){
-                            DynamicColors.applyToActivitiesIfAvailable(app);
+                            app.setDynamicTheme(true);
                             this.getActivity().recreate();
                         }else{
+                            app.setDynamicTheme(false);
                             this.getActivity().recreate();
-                            app.setTheme(R.style.Theme_Bantumi);
                         }
                         return true;
+                    }
+            );
+
+
+            findPreference("initialSeedNumber").setSummaryProvider(
+                    preference -> {
+                        String value = preference.getSharedPreferences().getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas)));
+                        return getResources().getString(R.string.initialSeedSummary) + ": " + value;
+                    }
+            );
+
+            findPreference("nickName").setSummaryProvider(
+                    preference -> {
+                        String value = preference.getSharedPreferences().getString("nickName", "Player");
+                        return getResources().getString(R.string.nickNameSummary) + ": " + value;
+                    }
+            );
+
+            findPreference("theme").setSummaryProvider(
+                    preference -> {
+                        String value = preference.getSharedPreferences().getString("theme", "system");
+                        return getResources().getString(R.string.themeSummary) + ": " + value;
                     }
             );
         }

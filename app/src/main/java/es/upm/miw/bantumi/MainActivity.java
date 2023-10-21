@@ -3,7 +3,9 @@ package es.upm.miw.bantumi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,13 +23,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
+import es.upm.miw.bantumi.dialogs.FinalAlertDialog;
 import es.upm.miw.bantumi.model.BantumiViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String MI_FICHERO = "game.txt";
     protected final String LOG_TAG = "MiW";
-    JuegoBantumi juegoBantumi;
+    public JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     int numInicialSemillas;
 
@@ -37,10 +40,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
-        numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
+        numInicialSemillas =
+                getResources().getInteger(PreferenceManager.getDefaultSharedPreferences(this)
+                        .getInt("numInicialSemillas", R.integer.intNumInicialSemillas));
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
     }
 
     /**
@@ -123,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.opcReiniciarPartida:
                 juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtJuegoReiniciado),
+                        Snackbar.LENGTH_LONG
+                ).show();
                 return true;
             case R.id.opcGuardarPartida:
                 String gameSerialized = juegoBantumi.serializa();
