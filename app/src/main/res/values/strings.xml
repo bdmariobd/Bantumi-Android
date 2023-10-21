@@ -47,4 +47,12 @@
     <string name="txtDialogoFinalTitulo">Fin del juego</string>
     <string name="txtDialogoFinalPregunta">¿Desea jugar otra partida?</string>
 
+    <!-- Preferencias -->
+    <string name="gamePreferencesTitle">Juego</string>
+    <string name="gamePreferencesTimer">Mostrar tiempo</string>
+    <string name="apperanceSettingsDynamicColor">Usar colores dinámicos</string>
+    <string name="apperanceSettingsTitle">Apariencia</string>
+    <string name="apperanceSettingsThemeTitle">Tema</string>
+    <string name="initialSeedNumberTitle">Numero inicial de semillas</string>
+
 </resources>
