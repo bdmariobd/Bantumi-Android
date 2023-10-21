@@ -1,6 +1,7 @@
 package es.upm.miw.bantumi;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +17,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String MI_FICHERO = "game.txt";
     protected final String LOG_TAG = "MiW";
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Muestra el valor <i>valor</i> en la posición <i>pos</i>
      *
-     * @param pos posición a actualizar
+     * @param pos   posición a actualizar
      * @param valor valor a mostrar
      */
     private void mostrarValor(int pos, int valor) {
@@ -120,6 +124,24 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcReiniciarPartida:
                 juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
                 return true;
+            case R.id.opcGuardarPartida:
+                String gameSerialized = juegoBantumi.serializa();
+                Log.i(LOG_TAG, "onOptionsItemSelected() -> " + gameSerialized);
+                this.saveGameToFile(gameSerialized);
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtFicheroGuardado),
+                        Snackbar.LENGTH_LONG
+                ).setAction(
+                        getString(R.string.txtDeshacer),
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                saveGameToFile("");
+                            }
+                        }
+                ).show();
+                return true;
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -141,6 +163,20 @@ public class MainActivity extends AppCompatActivity {
                 ).show();
         }
         return true;
+    }
+
+    private void saveGameToFile(String gameSerialized) {
+        try {
+            FileOutputStream fos = openFileOutput(MI_FICHERO, Context.MODE_PRIVATE);
+            fos.write(gameSerialized.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            Snackbar.make(
+                    findViewById(android.R.id.content),
+                    getString(R.string.txtFicheroFalloAlGuardar),
+                    Snackbar.LENGTH_LONG
+            ).show();
+        }
     }
 
     /**
@@ -194,11 +230,11 @@ public class MainActivity extends AppCompatActivity {
             texto = "¡¡¡ EMPATE !!!";
         }
         Snackbar.make(
-                findViewById(android.R.id.content),
-                texto,
-                Snackbar.LENGTH_LONG
-        )
-        .show();
+                        findViewById(android.R.id.content),
+                        texto,
+                        Snackbar.LENGTH_LONG
+                )
+                .show();
 
         // @TODO guardar puntuación
 

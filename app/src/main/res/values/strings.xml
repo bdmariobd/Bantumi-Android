@@ -55,5 +55,8 @@
     <string name="apperanceSettingsThemeTitle">Tema</string>
     <string name="initialSeedNumberTitle">Numero inicial de semillas</string>
     <string name="nickNameTitle"> Nombre del jugador</string>
+    <string name="txtFicheroFalloAlGuardar">Fallo al guardar la partida</string>
+    <string name="txtFicheroGuardado">Partida guardada con exito</string>
+    <string name="txtDeshacer">Deshacer</string>
 
 </resources>
