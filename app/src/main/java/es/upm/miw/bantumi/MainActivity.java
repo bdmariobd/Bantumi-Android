@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
@@ -66,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         // workaround to update dynamic colors
-        Long timeElapsed = chronometer.getBase() - SystemClock.elapsedRealtime();
         super.onRestart();
         this.recreate();
         if (gameHasTimer) {
+            long timeElapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
             chronometer.setBase(SystemClock.elapsedRealtime() + timeElapsed);
             chronometer.start();
         }
@@ -167,12 +168,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.opcReiniciarPartida:
-                juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
-                Snackbar.make(
-                        findViewById(android.R.id.content),
-                        getString(R.string.txtJuegoReiniciado),
-                        Snackbar.LENGTH_LONG
-                ).show();
+
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.txtReiniciarPartida)
+                        .setMessage(R.string.txtReiniciarPartidaAlerta)
+                        .setPositiveButton(R.string.txtReiniciarPartida, (dialog, which) -> {
+                            juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                            Snackbar.make(
+                                    findViewById(android.R.id.content),
+                                    getString(R.string.txtJuegoReiniciado),
+                                    Snackbar.LENGTH_LONG
+                            ).show();
+                        })
+                        .setNegativeButton(R.string.cancelar, null)
+                        .show();
                 return true;
             case R.id.opcGuardarPartida:
                 String gameSerialized = juegoBantumi.serializa();
@@ -195,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.opcAcercaDe:
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.aboutTitle)
                         .setMessage(R.string.aboutMessage)
                         .setPositiveButton(android.R.string.ok, null)
