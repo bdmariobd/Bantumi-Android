@@ -3,10 +3,12 @@ package es.upm.miw.bantumi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -53,11 +58,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        chronometer = this.findViewById(R.id.tvChronometer);
+
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas))));
         gameHasTimer = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("displayTimer", false);
+        String player1Name = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("nickName", "Jugador 1");
+        TextView tvJugador1 = findViewById(R.id.tvPlayer1);
+        tvJugador1.setText(player1Name);
+
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         gameVM = new ViewModelProvider(this).get(GameViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
@@ -69,11 +81,6 @@ public class MainActivity extends AppCompatActivity {
         // workaround to update dynamic colors
         super.onRestart();
         this.recreate();
-        if (gameHasTimer) {
-            long timeElapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
-            chronometer.setBase(SystemClock.elapsedRealtime() + timeElapsed);
-            chronometer.start();
-        }
     }
 
     /**
@@ -86,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
             bantumiVM.getGameStarted().observe(  // Inicio de juego
                     this,
                     started -> {
-                        chronometer = this.findViewById(R.id.tvChronometer);
-                        if (started && chronometer != null && !chronometer.isActivated()) {
+                        if (started && chronometer != null) {
                             chronometer.setBase(SystemClock.elapsedRealtime());
                             chronometer.start();
                         }
@@ -122,24 +128,26 @@ public class MainActivity extends AppCompatActivity {
      * @param turnoActual turno actual
      */
     private void marcarTurno(@NonNull JuegoBantumi.Turno turnoActual) {
+        MaterialCardView mvJugador1 = findViewById(R.id.mvPlayer1);
+        MaterialCardView mvJugador2 = findViewById(R.id.mvPlayer2);
         TextView tvJugador1 = findViewById(R.id.tvPlayer1);
         TextView tvJugador2 = findViewById(R.id.tvPlayer2);
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurfaceContainerHighest, typedValue, true);
+        int colorSurfaceContainerHighest = typedValue.data;
         switch (turnoActual) {
             case turnoJ1:
-                tvJugador1.setTextColor(getColor(R.color.white));
-                tvJugador1.setBackgroundColor(getColor(R.color.md_theme_light_secondary));
-                tvJugador2.setTextColor(getColor(R.color.black));
-                tvJugador2.setBackgroundColor(getColor(R.color.white));
+                mvJugador1.setCardBackgroundColor(colorSurfaceContainerHighest);
+                mvJugador2.setCardBackgroundColor(Color.TRANSPARENT);
                 break;
             case turnoJ2:
-                tvJugador1.setTextColor(getColor(R.color.black));
-                tvJugador1.setBackgroundColor(getColor(R.color.white));
-                tvJugador2.setTextColor(getColor(R.color.white));
-                tvJugador2.setBackgroundColor(getColor(R.color.md_theme_light_secondary));
+                mvJugador1.setCardBackgroundColor(Color.TRANSPARENT);
+                mvJugador2.setCardBackgroundColor(colorSurfaceContainerHighest);
                 break;
             default:
-                tvJugador1.setTextColor(getColor(R.color.black));
-                tvJugador2.setTextColor(getColor(R.color.black));
+                mvJugador1.setCardBackgroundColor(Color.TRANSPARENT);
+                mvJugador1.setCardBackgroundColor(Color.TRANSPARENT);
+                break;
         }
     }
 
@@ -174,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage(R.string.txtReiniciarPartidaAlerta)
                         .setPositiveButton(R.string.txtReiniciarPartida, (dialog, which) -> {
                             juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                            if(gameHasTimer){
+                                chronometer.setBase(SystemClock.elapsedRealtime());
+                                chronometer.start();
+                            }
                             Snackbar.make(
                                     findViewById(android.R.id.content),
                                     getString(R.string.txtJuegoReiniciado),
@@ -201,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, BestResultsActivity.class));
                 return true;
             case R.id.opcAjustes:
+                getIntent().putExtra("START_TIME", chronometer.getBase());
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.opcAcercaDe:

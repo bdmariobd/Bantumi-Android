@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,11 @@ public class BestResultsActivity extends AppCompatActivity {
         gameListAdapter = new GameListAdapter(gameViewModel);
         lvGameList = findViewById(R.id.rvScores);
         lvGameList.setAdapter(gameListAdapter);
-        lvGameList.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        lvGameList.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(lvGameList.getContext(),
+                layoutManager.getOrientation());
+        lvGameList.addItemDecoration(dividerItemDecoration);
 
         gameViewModel.getAllGames().observe(this, games -> {
             gameListAdapter.setmGameList(games);

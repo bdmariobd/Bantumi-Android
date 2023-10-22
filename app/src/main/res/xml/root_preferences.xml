@@ -45,6 +45,7 @@
             android:entries="@array/theme_entries"
             android:entryValues="@array/theme_values"
             android:title="@string/apperanceSettingsThemeTitle"
+            app:icon="@drawable/format_paint_fill0_wght400_grad0_opsz24"
             app:key="theme" />
 
         <SwitchPreference

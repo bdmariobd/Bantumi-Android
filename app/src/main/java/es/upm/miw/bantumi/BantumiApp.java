@@ -27,6 +27,10 @@ public class BantumiApp extends Application {
         }
     }
 
+    public Boolean isDynamicColorSupported() {
+        return DynamicColors.isDynamicColorAvailable();
+    }
+
     public void setTheme(String theme) {
         switch (theme) {
             case "light":

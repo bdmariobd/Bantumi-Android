@@ -29,8 +29,11 @@
             android:id="@+id/tvHighestScores"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:paddingBottom="8dp"
             android:text="@string/highestScoresTitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="?attr/colorOnSurface" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScores"

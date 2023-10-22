@@ -3,7 +3,6 @@ package es.upm.miw.bantumi;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -43,6 +42,9 @@ public class SettingsActivity extends AppCompatActivity {
                         return true;
                     }
             );
+
+            findPreference("useDinamicColor").setEnabled(app.isDynamicColorSupported());
+
 
 
             findPreference("initialSeedNumber").setSummaryProvider(
