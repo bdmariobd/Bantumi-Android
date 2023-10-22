@@ -22,23 +22,17 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            BantumiApp app = (BantumiApp) requireActivity().getApplication();
 
             findPreference("theme").setOnPreferenceChangeListener(
                     (preference, newValue) -> {
-                        if (newValue.toString().equals("light")) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        } else if (newValue.toString().equals("dark")) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        }
+                        app.setTheme(newValue.toString());
                         return true;
                     }
             );
 
             findPreference("useDinamicColor").setOnPreferenceChangeListener(
                     (preference, newValue) -> {
-                        BantumiApp app = (BantumiApp) requireActivity().getApplication();
                         if (newValue.toString().equals("true")) {
                             app.setDynamicTheme(true);
                             this.getActivity().recreate();

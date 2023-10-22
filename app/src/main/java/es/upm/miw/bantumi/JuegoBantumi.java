@@ -72,6 +72,9 @@ public class JuegoBantumi {
      * @param pos posición escogida [0..13]
      */
     public void jugar(int pos) {
+        if(!bantumiVM.getGameStarted().getValue()) {
+            bantumiVM.setGameStarted(true);
+        }
         if (pos < 0 || pos >= NUM_POSICIONES)
             throw new IndexOutOfBoundsException(String.format("Posición (%d) fuera de límites", pos));
         if (getSemillas(pos) == 0
@@ -119,6 +122,7 @@ public class JuegoBantumi {
             recolectar(0);
             recolectar(7);
             setTurno(Turno.Turno_TERMINADO);
+            bantumiVM.setGameStarted(false);
         }
 
         // Determinar turno siguiente (si es depósito propio -> repite turno)

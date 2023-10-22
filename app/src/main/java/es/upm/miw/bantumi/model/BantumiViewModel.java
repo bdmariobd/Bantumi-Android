@@ -15,12 +15,15 @@ public class BantumiViewModel extends ViewModel {
 
     private final MutableLiveData<JuegoBantumi.Turno> turno;
 
+    private final MutableLiveData<Boolean> gameStarted;
+
     public BantumiViewModel() {
         turno = new MutableLiveData<>(JuegoBantumi.Turno.turnoJ1);
         tablero = new ArrayList<>(JuegoBantumi.NUM_POSICIONES);
         for (int i = 0; i < JuegoBantumi.NUM_POSICIONES; i++) {
             tablero.add(i, new MutableLiveData<>(0));
         }
+        gameStarted = new MutableLiveData<>(false);
     }
 
     /**
@@ -65,5 +68,13 @@ public class BantumiViewModel extends ViewModel {
             throw new ArrayIndexOutOfBoundsException();
         }
         tablero.get(pos).setValue(v);
+    }
+
+    public MutableLiveData<Boolean> getGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(Boolean gameStarted) {
+        this.gameStarted.setValue(gameStarted);
     }
 }

@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
     public JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
     Integer numInicialSemillas;
+    Boolean gameHasTimer;
     private GameViewModel gameVM;
+
+    private Chronometer chronometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas))));
+        gameHasTimer = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("displayTimer", false);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
         gameVM = new ViewModelProvider(this).get(GameViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
@@ -58,8 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
+        // workaround to update dynamic colors
+        Long timeElapsed = chronometer.getBase() - SystemClock.elapsedRealtime();
         super.onRestart();
         this.recreate();
+        if (gameHasTimer) {
+            chronometer.setBase(SystemClock.elapsedRealtime() + timeElapsed);
+            chronometer.start();
+        }
     }
 
     /**
@@ -67,6 +80,19 @@ public class MainActivity extends AppCompatActivity {
      * Si se modifica el contenido del tablero -> se actualiza la vista.
      */
     private void crearObservadores() {
+        if(gameHasTimer){
+            this.findViewById(R.id.mcChronometer).setVisibility(View.VISIBLE);
+            bantumiVM.getGameStarted().observe(  // Inicio de juego
+                    this,
+                    started -> {
+                        chronometer = this.findViewById(R.id.tvChronometer);
+                        if (started && chronometer != null && !chronometer.isActivated()) {
+                            chronometer.setBase(SystemClock.elapsedRealtime());
+                            chronometer.start();
+                        }
+                    }
+            );
+        }
         for (int i = 0; i < JuegoBantumi.NUM_POSICIONES; i++) {
             int finalI = i;
             bantumiVM.getNumSemillas(i).observe(    // Huecos y almacenes
@@ -257,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
      * El juego ha terminado. Volver a jugar?
      */
     private void finJuego() {
+        if(gameHasTimer){
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            chronometer.stop();
+        }
         String texto = (juegoBantumi.getSemillas(6) > 6 * numInicialSemillas)
                 ? "Gana Jugador 1"
                 : "Gana Jugador 2";
