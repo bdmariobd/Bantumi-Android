@@ -10,15 +10,17 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="displayTimer"
-            android:title="@string/gamePreferencesTimer" />
+            android:title="@string/gamePreferencesTimer"
+            app:icon="@drawable/timer_fill0_wght400_grad0_opsz24" />
         <EditTextPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="@string/initialSeedNumberTitle"
+            android:defaultValue="@integer/intNumInicialSemillas"
             android:inputType="number"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/initialSeedNumberTitle"
+            app:icon="@drawable/workspaces_fill0_wght400_grad0_opsz24"
             app:key="initialSeedNumber" />
         <EditTextPreference
             android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/nickNameTitle"
+            app:icon="@drawable/badge_fill0_wght400_grad0_opsz24"
             app:key="nickName" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -49,6 +52,7 @@
             android:layout_height="wrap_content"
             android:title="@string/apperanceSettingsDynamicColor"
             app:defaultValue="false"
+            app:icon="@drawable/palette_fill0_wght400_grad0_opsz24"
             app:key="useDinamicColor"
             app:summary="@string/dynamicColorSummary" />
     </PreferenceCategory>

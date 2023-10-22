@@ -4,24 +4,23 @@
 
     <item
         android:id="@+id/opcReiniciarPartida"
-        android:icon="@android:drawable/ic_menu_rotate"
+        android:icon="@drawable/restart_alt_fill0_wght400_grad0_opsz24"
         android:orderInCategory="5"
         android:title="@string/txtReiniciarPartida"
         app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/opcGuardarPartida"
-        android:icon="@android:drawable/ic_menu_save"
+        android:icon="@drawable/save_fill0_wght400_grad0_opsz24"
         android:orderInCategory="10"
         android:title="@string/txtOpcionGuardar"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/opcRecuperarPartida"
-        android:icon="@android:drawable/ic_menu_revert"
         android:orderInCategory="15"
         android:title="@string/txtOpcionRecuperar"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/opcMejoresResultados"
@@ -30,7 +29,6 @@
 
     <item
         android:id="@+id/opcAjustes"
-        android:icon="@android:drawable/ic_menu_preferences"
         android:orderInCategory="100"
         android:title="@string/preferencesText" />
 

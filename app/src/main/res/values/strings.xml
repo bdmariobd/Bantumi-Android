@@ -77,5 +77,6 @@
     <string name="txtPartidaFuerBorrada">La partida fue borrada</string>
     <string name="txtDialogoRestaurarTitulo">Restaurar partida</string>
     <string name="txtFicheroNoSeleccionado">No seleccionaste ninguna partida</string>
+    <string name="txtReiniciarPartidaAlerta">¿Desea realmente reiniciar la partida?</string>
 
 </resources>
