@@ -184,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                             juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
                             if(gameHasTimer){
                                 chronometer.setBase(SystemClock.elapsedRealtime());
-                                chronometer.start();
+                                chronometer.stop();
+                                bantumiVM.setGameStarted(false);
                             }
                             Snackbar.make(
                                     findViewById(android.R.id.content),
@@ -308,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
         if(gameHasTimer){
             chronometer.setBase(SystemClock.elapsedRealtime());
             chronometer.stop();
+            bantumiVM.setGameStarted(false);
         }
         String texto = (juegoBantumi.getSemillas(6) > 6 * numInicialSemillas)
                 ? "Gana Jugador 1"
