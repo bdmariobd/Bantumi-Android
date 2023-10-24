@@ -14,7 +14,7 @@ public class JuegoBantumi {
 
     private final BantumiViewModel bantumiVM;
     // Número inicial de semillas
-    private final int numInicialSemillas;
+    private int numInicialSemillas;
 
     /**
      * Constructor
@@ -28,7 +28,7 @@ public class JuegoBantumi {
         this.bantumiVM = bantumiVM;
         this.numInicialSemillas = numInicialSemillas;
         if (campoVacio(Turno.turnoJ1) && campoVacio(Turno.turnoJ2)) { // Inicializa sólo si está vacío!!!
-            inicializar(turno);
+            inicializar(turno, numInicialSemillas);
         }
     }
 
@@ -55,14 +55,19 @@ public class JuegoBantumi {
      *
      * @param turno especifica el turno inicial <code>[Turno.turnoJ1 || Turno.turnoJ2]</code>
      */
-    public void inicializar(Turno turno) {
+    public void inicializar(Turno turno, int numInicialSemillas) {
+        if (numInicialSemillas < 1)
+            throw new IllegalArgumentException("Número de semillas inicial debe ser mayor que 0");
+        if (numInicialSemillas != this.numInicialSemillas) {
+            this.numInicialSemillas = numInicialSemillas;
+        }
         setTurno(turno);
         for (int i = 0; i < NUM_POSICIONES; i++)
             setSemillas(
                     i,
                     (i == 6 || i == 13) // Almacén??
                             ? 0
-                            : numInicialSemillas
+                            : this.numInicialSemillas
             );
     }
 

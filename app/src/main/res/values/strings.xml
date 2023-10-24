@@ -62,7 +62,7 @@
     <string name="initialSeedSummary">Semillas actuales</string>
     <string name="nickNameSummary">Nombre del jugador</string>
     <string name="themeSummary">Tema actual</string>
-    <string name="dynamicColorSummary">Si es posible, utiliza los colores de tu fondo de pantalla para customizar la aplicación. Requiere Android 12 como mínimo.</string>
+    <string name="dynamicColorSummary">Si es posible, utiliza los colores de tu fondo de pantalla para customizar la aplicación. Requiere reiniciar la partida. Requiere Android 12 como mínimo.</string>
     <string name="txtFicheroRecuperado">Partida recuperada!</string>
     <string name="txtFicheroFalloAlRecuperar">Fallo al recuperar la partida</string>
     <string name="highestScoresTitle">Mejores puntuaciones</string>
@@ -78,5 +78,6 @@
     <string name="txtDialogoRestaurarTitulo">Restaurar partida</string>
     <string name="txtFicheroNoSeleccionado">No seleccionaste ninguna partida</string>
     <string name="txtReiniciarPartidaAlerta">¿Desea realmente reiniciar la partida?</string>
+    <string name="restartApp">Los cambios no se aplicarán hasta reiniciar la partida</string>
 
 </resources>

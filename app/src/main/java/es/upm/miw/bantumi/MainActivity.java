@@ -43,7 +43,6 @@ import es.upm.miw.bantumi.utils.DateUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MI_FICHERO = "game.txt";
     protected final String LOG_TAG = "MiW";
     public JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
@@ -61,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
         chronometer = this.findViewById(R.id.tvChronometer);
 
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
-        numInicialSemillas = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas))));
+        numInicialSemillas = this.readNumInicialSemillas();
         gameHasTimer = PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean("displayTimer", false);
         String player1Name = PreferenceManager.getDefaultSharedPreferences(this)
@@ -77,10 +75,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        // workaround to update dynamic colors
-        super.onRestart();
-        this.recreate();
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(!gameHasTimer){
+            return;
+        }
+        outState.putLong("chronometer", chronometer.getBase());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(!gameHasTimer){
+            return;
+        }
+        chronometer.setBase(savedInstanceState.getLong("chronometer"));
+        chronometer.start();
     }
 
     /**
@@ -181,12 +191,9 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle(R.string.txtReiniciarPartida)
                         .setMessage(R.string.txtReiniciarPartidaAlerta)
                         .setPositiveButton(R.string.txtReiniciarPartida, (dialog, which) -> {
-                            juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
-                            if(gameHasTimer){
-                                chronometer.setBase(SystemClock.elapsedRealtime());
-                                chronometer.stop();
-                                bantumiVM.setGameStarted(false);
-                            }
+                            if(gameHasTimer) chronometer.setBase(SystemClock.elapsedRealtime());
+                            juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
+                            this.recreate();
                             Snackbar.make(
                                     findViewById(android.R.id.content),
                                     getString(R.string.txtJuegoReiniciado),
@@ -214,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, BestResultsActivity.class));
                 return true;
             case R.id.opcAjustes:
-                getIntent().putExtra("START_TIME", chronometer.getBase());
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.opcAcercaDe:
@@ -306,11 +312,6 @@ public class MainActivity extends AppCompatActivity {
      * El juego ha terminado. Volver a jugar?
      */
     private void finJuego() {
-        if(gameHasTimer){
-            chronometer.setBase(SystemClock.elapsedRealtime());
-            chronometer.stop();
-            bantumiVM.setGameStarted(false);
-        }
         String texto = (juegoBantumi.getSemillas(6) > 6 * numInicialSemillas)
                 ? "Gana Jugador 1"
                 : "Gana Jugador 2";
@@ -331,5 +332,22 @@ public class MainActivity extends AppCompatActivity {
         this.gameVM.insert(game);
         // terminar
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
+    }
+
+    public void restartChronometer(View v){
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
+    }
+
+    public int readNumInicialSemillas() {
+        int numInicialSemillas = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas))));
+        if (numInicialSemillas < 1) {
+            numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
+        }
+        if (this.numInicialSemillas==null || this.numInicialSemillas != numInicialSemillas) {
+            this.numInicialSemillas = numInicialSemillas;
+        }
+        return this.numInicialSemillas;
     }
 }

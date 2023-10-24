@@ -2,9 +2,7 @@ package es.upm.miw.bantumi.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 
@@ -31,7 +29,8 @@ public class FinalAlertDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                main.juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1);
+                                int numInicialSemillas = main.readNumInicialSemillas();
+                                main.juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
                             }
                         }
                 )

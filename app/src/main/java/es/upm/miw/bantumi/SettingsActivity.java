@@ -1,9 +1,12 @@
 package es.upm.miw.bantumi;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -17,11 +20,17 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
     }
 
+    protected void createSnackbar(String message) {
+        Log.i("SettingsActivity", "Snackbar: " + message);
+        Snackbar.make(findViewById(R.id.settings_container), message, Snackbar.LENGTH_LONG).show();
+    }
+
     public static class MySettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             BantumiApp app = (BantumiApp) requireActivity().getApplication();
+            SettingsActivity settingsActivity = (SettingsActivity) requireActivity();
 
             findPreference("theme").setOnPreferenceChangeListener(
                     (preference, newValue) -> {
@@ -32,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             findPreference("useDinamicColor").setOnPreferenceChangeListener(
                     (preference, newValue) -> {
+                        settingsActivity.createSnackbar(getResources().getString(R.string.restartApp));
                         if (newValue.toString().equals("true")) {
                             app.setDynamicTheme(true);
                             this.getActivity().recreate();
