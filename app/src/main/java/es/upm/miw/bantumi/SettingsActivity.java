@@ -1,9 +1,11 @@
 package es.upm.miw.bantumi;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -63,6 +65,11 @@ public class SettingsActivity extends AppCompatActivity {
                         return getResources().getString(R.string.initialSeedSummary) + ": " + value;
                     }
             );
+
+
+            EditTextPreference seedNumber = findPreference("initialSeedNumber");
+
+            seedNumber.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED));
 
             findPreference("nickName").setSummaryProvider(
                     preference -> {
