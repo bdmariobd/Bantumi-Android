@@ -1,6 +1,5 @@
 package es.upm.miw.bantumi;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,8 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -72,25 +69,6 @@ public class MainActivity extends AppCompatActivity {
         gameVM = new ViewModelProvider(this).get(GameViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(!gameHasTimer){
-            return;
-        }
-        outState.putLong("chronometer", chronometer.getBase());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if(!gameHasTimer){
-            return;
-        }
-        chronometer.setBase(savedInstanceState.getLong("chronometer"));
-        chronometer.start();
     }
 
     /**
@@ -192,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage(R.string.txtReiniciarPartidaAlerta)
                         .setPositiveButton(R.string.txtReiniciarPartida, (dialog, which) -> {
                             if(gameHasTimer) chronometer.setBase(SystemClock.elapsedRealtime());
+                            this.numInicialSemillas = this.readNumInicialSemillas();
                             juegoBantumi.inicializar(JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
                             this.recreate();
                             Snackbar.make(

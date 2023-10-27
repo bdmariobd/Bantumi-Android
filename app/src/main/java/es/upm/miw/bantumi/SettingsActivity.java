@@ -58,7 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
             findPreference("useDinamicColor").setEnabled(app.isDynamicColorSupported());
 
 
-
             findPreference("initialSeedNumber").setSummaryProvider(
                     preference -> {
                         String value = preference.getSharedPreferences().getString("initialSeedNumber", String.valueOf(getResources().getInteger(R.integer.intNumInicialSemillas)));
@@ -69,7 +68,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             EditTextPreference seedNumber = findPreference("initialSeedNumber");
 
-            seedNumber.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED));
+            seedNumber.setOnBindEditTextListener(editText -> {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                editText.setSelection(editText.getText().length());
+            });
 
             findPreference("nickName").setSummaryProvider(
                     preference -> {
